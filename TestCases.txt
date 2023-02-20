@@ -1,0 +1,80 @@
+Test Case1:
+____________
+
+Enter the number of Jobs
+3
+Enter job start time, end time, and earnings
+0900
+1030
+100
+1000
+1200
+500
+1100
+1200
+300
+The number of tasks and earnings available for others
+Task: 2
+Earnings: 400
+
+Test Case2:
+____________
+
+Enter the number of Jobs
+3
+Enter job start time, end time, and earnings
+0900
+1000
+250
+0945
+1200
+550
+1130
+1500
+150
+The number of tasks and earnings available for others
+Task: 2
+Earnings: 400
+
+Test Case 3:
+____________
+
+Enter the number of Jobs
+3
+Enter job start time, end time, and earnings
+0900
+1030
+100
+1000
+1200
+100
+1100
+1200
+100
+The number of tasks and earnings available for others
+Task: 2
+Earnings: 100
+
+
+Test Case4:
+____________
+
+Enter the number of Jobs
+3
+Enter job start time, end time, and earnings
+100
+1100
+1200
+1500
+1200
+520
+1234
+1254
+5200
+The number of tasks and earnings available for others
+Task: 2
+Earnings: 520
+
+
+
+

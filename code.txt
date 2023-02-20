@@ -1,0 +1,94 @@
+import java.util.*;
+
+class Job {
+    int start, end, profit;
+    
+    public Job(int start, int end, int profit) {
+        this.start = start;
+        this.end = end;
+        this.profit = profit;
+    }
+}
+class JobComparator implements Comparator<Job> {
+    @Override
+    public int compare(Job j1, Job j2) {
+        return j1.end - j2.end;
+    }
+}
+
+__________________________________________________________________________________________________________________
+
+
+import java.util.*;
+public class Main {
+	public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the number of Jobs");
+        int n = sc.nextInt();
+        List<Job> jobs = new ArrayList<>();
+        
+        // Input jobs
+        System.out.println("Enter job start time, end time, and earnings");
+        for (int i = 0; i < n; i++) {
+            
+            int start = sc.nextInt();
+            int end = sc.nextInt();
+            int profit = sc.nextInt();
+            jobs.add(new Job(start, end, profit));
+        }
+        
+        // Sort jobs by end time
+        Collections.sort(jobs, new JobComparator());
+        
+        // Compute maximum earnings for Lokesh and remaining earnings for others
+        int maxEarnings = computeMaxEarnings(jobs);
+        int remainingEarnings = computeRemainingEarnings(jobs, maxEarnings);
+        
+        // Output results
+        System.out.println("The number of tasks and earnings available for others");
+        System.out.println("Task: " + (n - 1));
+        System.out.println("Earnings: " + remainingEarnings);
+    }
+    
+    private static int computeMaxEarnings(List<Job> jobs) {
+        int n = jobs.size();
+        int[] dp = new int[n];
+        dp[0] = jobs.get(0).profit;
+        for (int i = 1; i < n; i++) {
+            int prev = findLastNonConflictingJob(jobs, i);
+            int include = jobs.get(i).profit;
+            if (prev != -1) {
+                include += dp[prev];
+            }
+            dp[i] = Math.max(include, dp[i - 1]);
+        }
+        return dp[n - 1];
+    }
+    
+    private static int findLastNonConflictingJob(List<Job> jobs, int i) {
+        int lo = 0;
+        int hi = i - 1;
+        while (lo <= hi) {
+            int mid = (lo + hi) / 2;
+            if (jobs.get(mid).end <= jobs.get(i).start) {
+                if (jobs.get(mid + 1).end <= jobs.get(i).start) {
+                    lo = mid + 1;
+                } else {
+                    return mid;
+                }
+            } else {
+                hi = mid - 1;
+            }
+        }
+        return -1;
+    }
+    
+    private static int computeRemainingEarnings(List<Job> jobs, int maxEarnings) {
+        int n = jobs.size();
+        int totalEarnings = 0;
+        for (int i = 0; i < n; i++) {
+            totalEarnings += jobs.get(i).profit;
+        }
+        return totalEarnings - maxEarnings;
+    }
+}
